@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+    已完成进度条颜色
+    为完成进度条颜色
+    已完成进度条高度
+    未完成进度条高度
+    完成度文字大小
+    完成度文字颜色
+    文字两侧的padding
+    -->
+    <declare-styleable name="MyHoriztalProgressBar">
+        <attr name="progressbar_reach_color" format="color" />
+        <attr name="progressbar_unreach_color" format="color" />
+        <attr name="progressbar_reach_height" format="dimension" />
+        <attr name="progressbar_unreach_height" format="dimension" />
+        <attr name="progressbar_text_color" format="color" />
+        <attr name="progressbar_text_size" format="dimension" />
+        <attr name="progressbar_text_offset" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="MyRoundProgressBar">
+        <attr name="progressbar_radius" format="dimension" />
+    </declare-styleable>
+</resources>
