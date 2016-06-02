@@ -20,4 +20,6 @@ progressbar_text_offset 与进度条两侧的间距（水平进度条设置用�
 
 progressbar_radius 圆形进度条的半径
 
-效果图在issues里。
+效果图
+
+![image](https://github.com/kjt666/CustomProgressBar/blob/master/GIF.gif ) 
