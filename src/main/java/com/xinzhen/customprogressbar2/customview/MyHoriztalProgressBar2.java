@@ -1,4 +1,4 @@
-﻿package com.xinzhen.customprogressbar2.customview;
+package com.xinzhen.customprogressbar2.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import com.xinzhen.customprogressbar2.R;
 
 /**
- * Created by C058 on 2016/6/14..
+ * Created by C058 on 2016/6/14.
  */
 public class MyHoriztalProgressBar2 extends ProgressBar {
 
@@ -29,7 +29,7 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     private int mUnReachColor = DEFAULT_UNREACH_COLOR;
     private int mProgressbarRadius = dp2px(DEFAULT_PROGRESSBAR_RADIUS);
 
-    private int mRealWidth;
+    private int mRealWidth,mRealHeight;
     private Paint mPaint;
     private RectF mRectf;
 
@@ -64,6 +64,7 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
 
         setMeasuredDimension(widthVal, heightVal);
         mRealWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
+        mRealHeight= getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
     }
 
     @Override
@@ -102,9 +103,7 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     }
 
     private Bitmap getBackGround() {
-        int width = getMeasuredWidth() - getPaddingRight() - getPaddingLeft();
-        int height = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(mRealWidth, mRealHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
         paint.setColor(mUnReachColor);
@@ -114,14 +113,13 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
         //直线
         canvas.drawLine(mProgressbarRadius, 0, mRealWidth - mProgressbarRadius, 0, paint);
         //结尾的半圆
-        canvas.translate(getMeasuredWidth() - mProgressbarHeight, 0);
+        canvas.translate(mRealWidth - mProgressbarHeight, 0);
         canvas.drawCircle(mProgressbarRadius, mProgressbarRadius, mProgressbarRadius, paint);
         return bitmap;
     }
 
     private Bitmap getProgressX(float progress) {
-        int height = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
-        Bitmap bitmap = Bitmap.createBitmap((int) progress, height, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap((int) progress, mRealHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint();
         paint.setColor(mReachColor);
