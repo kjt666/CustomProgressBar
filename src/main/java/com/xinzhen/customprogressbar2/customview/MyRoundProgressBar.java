@@ -79,5 +79,6 @@ public class MyRoundProgressBar extends MyHoriztalProgressBar {
         mPaint.setColor(mTextColor);
         canvas.drawText(text, mRadius - textWidth / 2, mRadius - textHeight, mPaint);
         canvas.restore();
+
     }
 }

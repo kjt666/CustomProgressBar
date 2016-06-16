@@ -14,14 +14,14 @@
 
     <com.xinzhen.customprogressbar2.customview.MyHoriztalProgressBar
         android:id="@+id/progressbar1"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:progress="30" />
 
     <com.xinzhen.customprogressbar2.customview.MyHoriztalProgressBar
         android:id="@+id/progressbar2"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:progress="60"
@@ -68,9 +68,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:progress="90"
+        android:progress="60"
         app:progressbar_radius="15dp"
         app:progressbar_reach_color="#218df2"
         app:progressbar_unreach_color="#218df2" />
 
+   <com.xinzhen.customprogressbar2.customview.MyHoriztalProgressBar2
+       android:id="@+id/progressbar7"
+       android:layout_width="200dp"
+       android:layout_height="wrap_content"
+       android:progress="30"/>
 </LinearLayout>

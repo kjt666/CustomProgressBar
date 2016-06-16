@@ -21,4 +21,10 @@
     <declare-styleable name="MyRoundProgressBar">
         <attr name="progressbar_radius" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="MyHoriztalProgressBar2">
+        <attr name="reach_color" format="color" />
+        <attr name="unreach_color" format="color" />
+        <attr name="progressbar_height" format="dimension" />
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
 </resources>

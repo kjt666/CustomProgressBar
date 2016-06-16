@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.xinzhen.customprogressbar2.customview.MyHoriztalProgressBar;
+import com.xinzhen.customprogressbar2.customview.MyHoriztalProgressBar2;
 import com.xinzhen.customprogressbar2.customview.MyRoundProgressBar;
 import com.xinzhen.customprogressbar2.customview.MyRoundProgressBar2;
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private MyHoriztalProgressBar progressBar1, progressBar2, progressBar3;
     private MyRoundProgressBar progressBar4, progressBar5;
     private MyRoundProgressBar2 progressBar6;
+    private MyHoriztalProgressBar2 progressBar7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar4 = (MyRoundProgressBar) findViewById(R.id.progressbar4);
         progressBar5 = (MyRoundProgressBar) findViewById(R.id.progressbar5);
         progressBar6 = (MyRoundProgressBar2) findViewById(R.id.progressbar6);
+        progressBar7 = (MyHoriztalProgressBar2) findViewById(R.id.progressbar7);
         new Timer().schedule(new TimerTask() {
             int i = 0;
 
@@ -74,5 +77,13 @@ public class MainActivity extends AppCompatActivity {
                 progressBar6.setProgress(++i);
             }
         }, 200, 200);
+        new Timer().schedule(new TimerTask() {
+            int i = 0;
+
+            @Override
+            public void run() {
+                progressBar7.setProgress(++i);
+            }
+        },200,100);
     }
 }
