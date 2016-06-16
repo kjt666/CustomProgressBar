@@ -1,4 +1,4 @@
-package com.xinzhen.customprogressbar2.customview;
+﻿package com.xinzhen.customprogressbar2.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import com.xinzhen.customprogressbar2.R;
 
 /**
- * Created by C058 on 2016/6/14.
+ * Created by C058 on 2016/6/14..
  */
 public class MyHoriztalProgressBar2 extends ProgressBar {
 
