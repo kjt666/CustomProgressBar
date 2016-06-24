@@ -29,7 +29,7 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     private int mUnReachColor = DEFAULT_UNREACH_COLOR;
     private int mProgressbarRadius = dp2px(DEFAULT_PROGRESSBAR_RADIUS);
 
-    private int mRealWidth,mRealHeight;
+    private int mRealWidth, mRealHeight;
     private Paint mPaint;
     private RectF mRectf;
 
@@ -46,15 +46,9 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     public MyHoriztalProgressBar2(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.MyHoriztalProgressBar2);
-        mProgressbarHeight = (int) ta.getDimension(R.styleable.MyHoriztalProgressBar2_progressbar_height, mProgressbarHeight);
         mReachColor = ta.getColor(R.styleable.MyHoriztalProgressBar2_reach_color, mReachColor);
         mUnReachColor = ta.getColor(R.styleable.MyHoriztalProgressBar2_unreach_color, mUnReachColor);
-        mProgressbarRadius = (int) ta.getDimension(R.styleable.MyHoriztalProgressBar2_radius, mProgressbarRadius);
         mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setDither(true);
-        mPaint.setStyle(Paint.Style.FILL);
-        mRectf = new RectF(0, 0, mProgressbarRadius * 2, mProgressbarRadius * 2);
     }
 
     @Override
@@ -64,7 +58,11 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
 
         setMeasuredDimension(widthVal, heightVal);
         mRealWidth = getMeasuredWidth() - getPaddingLeft() - getPaddingRight();
-        mRealHeight= getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
+        mRealHeight = getMeasuredHeight() - getPaddingTop() - getPaddingBottom();
+        mProgressbarHeight = mRealHeight;
+        mProgressbarRadius = mProgressbarHeight / 2;
+        mRectf = new RectF(0, 0, mProgressbarRadius * 2, mProgressbarRadius * 2);
+        mDstBmp = getBackGround();
     }
 
     @Override
@@ -72,14 +70,15 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
         super.onDraw(canvas);
         float radio = getProgress() * 1.0f / getMax();
         float finshedX = mRealWidth * radio;
-        mDstBmp = getBackGround();
-        mSrcBmp = getProgressX(finshedX);
         int layerID1 = canvas.saveLayer(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint, Canvas.ALL_SAVE_FLAG);
-        canvas.translate(getPaddingLeft(), 0);
+        canvas.translate(getPaddingLeft(), getPaddingTop());
         canvas.drawBitmap(mDstBmp, 0, 0, mPaint);
-        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(mSrcBmp, 0, 0, mPaint);
-        mPaint.setXfermode(null);
+        if (finshedX > 0) {
+            mSrcBmp = getProgressX(finshedX);
+            mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+            canvas.drawBitmap(mSrcBmp, 0, 0, mPaint);
+            mPaint.setXfermode(null);
+        }
         canvas.restoreToCount(layerID1);
     }
 
@@ -103,28 +102,31 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     }
 
     private Bitmap getBackGround() {
-        Bitmap bitmap = Bitmap.createBitmap(mRealWidth, mRealHeight, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(mRealWidth + mProgressbarRadius, mRealHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(mUnReachColor);
         paint.setStrokeWidth(2 * mProgressbarHeight);
         //开头的半圆
         canvas.drawArc(mRectf, 90, 180, false, paint);
         //直线
-        canvas.drawLine(mProgressbarRadius, 0, mRealWidth - mProgressbarRadius, 0, paint);
+        canvas.drawLine(mProgressbarRadius - mProgressbarRadius / 10, 0, mRealWidth, 0, paint);
         //结尾的半圆
-        canvas.translate(mRealWidth - mProgressbarHeight, 0);
+        canvas.translate(mRealWidth - mProgressbarRadius, 0);
         canvas.drawCircle(mProgressbarRadius, mProgressbarRadius, mProgressbarRadius, paint);
         return bitmap;
     }
 
     private Bitmap getProgressX(float progress) {
-        Bitmap bitmap = Bitmap.createBitmap((int) progress, mRealHeight, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap((int) progress + (mProgressbarRadius), mRealHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        Paint paint = new Paint();
+        canvas.drawRGB(206, 206, 206);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(mReachColor);
         paint.setStrokeWidth(2 * mProgressbarHeight);
         canvas.drawLine(0, 0, progress, 0, paint);
+        canvas.translate(progress - mProgressbarRadius, 0);
+        canvas.drawCircle(mProgressbarRadius, mProgressbarRadius, mProgressbarRadius, paint);
         return bitmap;
     }
 }
