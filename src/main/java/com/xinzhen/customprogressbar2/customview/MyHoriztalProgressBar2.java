@@ -120,7 +120,7 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     private Bitmap getProgressX(float progress) {
         Bitmap bitmap = Bitmap.createBitmap((int) progress + (mProgressbarRadius), mRealHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        canvas.drawRGB(206, 206, 206);
+        canvas.drawColor(mUnReachColor);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(mReachColor);
         paint.setStrokeWidth(2 * mProgressbarHeight);
