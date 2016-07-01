@@ -73,6 +73,7 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
         int layerID1 = canvas.saveLayer(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint, Canvas.ALL_SAVE_FLAG);
         canvas.translate(getPaddingLeft(), getPaddingTop());
         canvas.drawBitmap(mDstBmp, 0, 0, mPaint);
+//        canvas.drawLine(0,0,mRealWidth,0,mPaint);
         if (finshedX > 0) {
             mSrcBmp = getProgressX(finshedX);
             mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
@@ -85,14 +86,15 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     private int measureHeight(int heightMeasureSpec) {
         int height = MeasureSpec.getSize(heightMeasureSpec);
         int mode = MeasureSpec.getMode(heightMeasureSpec);
+        int miniHeight = getPaddingTop() + getPaddingBottom() + mProgressbarHeight;
         int result = 0;
         if (mode == MeasureSpec.EXACTLY) {
-            result = height;
-        } else {
-            result = getPaddingTop() + getPaddingBottom() + mProgressbarHeight;
-            if (mode == MeasureSpec.AT_MOST) {
-                result = Math.min(result, height);
-            }
+            result = height < miniHeight ? miniHeight : height;
+        } else if (mode == MeasureSpec.UNSPECIFIED || mode == MeasureSpec.AT_MOST) {
+            result = miniHeight;
+//            if (mode == MeasureSpec.AT_MOzST) {
+//                result = Math.min(result, height);
+//            }
         }
         return result;
     }
@@ -102,7 +104,9 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     }
 
     private Bitmap getBackGround() {
-        Bitmap bitmap = Bitmap.createBitmap(mRealWidth + mProgressbarRadius, mRealHeight, Bitmap.Config.ARGB_8888);
+        //创建画布，不用mRealWidth的原因是加入给控件设定10dp宽度，在设定10dp的pading，那么这个mReaalWidth则为负数，创建bitmap会报错，同理，高度我们也是限定了的
+//        Bitmap bitmap = Bitmap.createBitmap(mRealWidth + mProgressbarRadius, mRealHeight, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(getMeasuredWidth() + mProgressbarRadius, getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(mUnReachColor);
@@ -118,7 +122,8 @@ public class MyHoriztalProgressBar2 extends ProgressBar {
     }
 
     private Bitmap getProgressX(float progress) {
-        Bitmap bitmap = Bitmap.createBitmap((int) progress + (mProgressbarRadius), mRealHeight, Bitmap.Config.ARGB_8888);
+        //加上半径主要是为了能够显示出已完成进度条的最后那半个圆
+        Bitmap bitmap = Bitmap.createBitmap((int) progress + (mProgressbarRadius), getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(mUnReachColor);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);

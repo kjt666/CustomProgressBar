@@ -100,17 +100,17 @@ public class MyHoriztalProgressBar extends ProgressBar {
     }
 
     private int measureHeight(int heightMeasureSpec) {
-        int result = 0;
         int mode = MeasureSpec.getMode(heightMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
-        if (mode == MeasureSpec.EXACTLY) {
+        int result = 0;
+        if (mode == MeasureSpec.EXACTLY||mode == MeasureSpec.UNSPECIFIED) {
             result = height;
-        } else {
+        } else if (mode == MeasureSpec.AT_MOST) {
             int textHeight = (int) (mPaint.descent() - mPaint.ascent());
             result = getPaddingTop() + getPaddingBottom() + Math.max(Math.max(mReachHeight, mUnReachHeight), textHeight);
-            if (mode == MeasureSpec.AT_MOST) {
-                result = Math.min(result, height);
-            }
+//            {
+//                result = Math.min(result, height);
+//            }
         }
         return result;
     }
